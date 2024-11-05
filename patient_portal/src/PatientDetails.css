@@ -1,0 +1,48 @@
+/* Adjustments for the profile section */
+.profile-summary {
+    display: flex;
+    align-items: center; /* Centers items vertically */
+    justify-content: space-around; /* Spaces items evenly */
+    margin-bottom: 20px; /* Adds space between sections */
+    padding: 20px 0; /* Padding on top and bottom */
+}
+
+.image-container img {
+    width: 150px; /* Adjust size as necessary */
+    height: auto;
+    border-radius: 10px; /* Rounded corners for the image */
+    margin-right: 20px; /* Adds right margin for spacing between image and summary */
+}
+
+.summary-container {
+    flex-grow: 1;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    text-align: left;
+}
+
+/* Adjustments for dashboard and chatbot containers */
+.dashboard-chatbot-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px; /* Adds space above the containers */
+}
+
+.dashboard-container, .chatbot-container {
+    width: 49%; /* Slightly less than half to fit side by side with a gap */
+    min-height: 500px; /* Set a minimum height for these containers */
+    background-color: #fff; /* Optional: sets a background color */
+    padding: 20px; /* Internal padding */
+    border: 1px solid #ccc; /* Adds a border */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Adds a shadow for depth */
+}
+
+/* Ensure the main container expands as needed */
+.patient-details-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%; /* Uses full width */
+}

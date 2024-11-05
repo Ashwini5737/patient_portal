@@ -8,13 +8,13 @@
   
   .login-form input {
     display: block;
-    width: 100%;
+    width: 90%;
     margin-bottom: 10px;
     padding: 10px;
   }
   
   .login-form button {
-    width: 100%;
+    width: 90%;
     padding: 10px;
     background-color: green;
     color: white;
