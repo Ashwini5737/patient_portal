@@ -1,8 +1,9 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Login from './Login';
 import PatientDetails from './PatientDetails';
-import NavBar from './Navbar';  // Make sure this is correctly imported
+import ChatBot from './ChatBot';  // Import the ChatBot component
+import NavBar from './Navbar';
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/patient/:id" element={<PatientDetails />} />
+        <Route path="/chat/:id" element={<ChatBot />} />
       </Routes>
     </Router>
   );

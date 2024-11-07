@@ -1,4 +1,4 @@
-/* Adjustments for the profile section */
+/* Profile and Summary layout */
 .profile-summary {
     display: flex;
     align-items: center; /* Centers items vertically */
@@ -24,7 +24,7 @@
     text-align: left;
 }
 
-/* Adjustments for dashboard and chatbot containers */
+/* Dashboard and Chatbot layout */
 .dashboard-chatbot-container {
     display: flex;
     justify-content: space-between;
@@ -38,11 +38,36 @@
     padding: 20px; /* Internal padding */
     border: 1px solid #ccc; /* Adds a border */
     box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Adds a shadow for depth */
+    border-radius: 10px; /* Rounded corners */
 }
 
-/* Ensure the main container expands as needed */
-.patient-details-container {
-    display: flex;
-    flex-direction: column;
-    width: 100%; /* Uses full width */
+.dashboard-container:hover, .chatbot-container:hover {
+    transform: scale(1.03);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+/* Toggle and Table Styles */
+.view-toggle button {
+    padding: 10px 20px;
+    margin: 5px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px;
+}
+
+.view-toggle button:hover {
+    background-color: #0056b3;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
 }

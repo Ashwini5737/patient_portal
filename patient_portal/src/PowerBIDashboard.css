@@ -1,7 +1,11 @@
-.powerbi-dashboard-container {
-    background-color: #f2f2f2;
-    padding: 20px;
-    border-radius: 10px;
-    margin: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+/* PatientDetails.css */
+.powerbi-dashboard {
+    display: flex;
+    justify-content: center; /* Center the iframe */
+    margin: 20px 0; /* Add some margin around the dashboard */
+}
+
+.powerbi-dashboard iframe {
+    max-width: 100%; /* Make the iframe responsive */
+    height: auto; /* Adjust height automatically */
 }

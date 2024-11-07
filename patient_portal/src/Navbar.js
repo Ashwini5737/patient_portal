@@ -1,9 +1,11 @@
 // NavBar.js
 import React from 'react';
+import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import './Navbar.css'; // Make sure this path is correct based on your project structure
+import './Navbar.css'; 
 
-const NavBar = () => {
+const NavBar = ({ patientId }) => {
+    const { id } = useParams();
     const navigate = useNavigate();
 
     const handleNavigation = (path) => {
@@ -12,12 +14,12 @@ const NavBar = () => {
 
     return (
         <nav>
-            <button onClick={() => handleNavigation('/')}>Home</button>
-            <button onClick={() => handleNavigation('/appointment')}>Appointment Booking</button>
-            <button onClick={() => handleNavigation('/dashboard')}>Dashboard</button>
-            <button onClick={() => handleNavigation('/chatbot')}>Chatbot</button>
+            <button onClick={() => handleNavigation('/patient/${id}')}>Home</button>
+            <button onClick={() => handleNavigation(`/apppointment/${id}`)}>Appointment Booking</button>
+            <button onClick={() => handleNavigation(`/dashboard/${id}`)}>Dashboard</button>
+            <button onClick={() => handleNavigation(`/chat/${id}`)}>Chatbot</button>
             <button onClick={() => handleNavigation('/emergency')}>Emergency</button>
-            <button onClick={() => handleNavigation('/login')}>Login</button>
+            <button onClick={() => handleNavigation('/')}>Login</button>
         </nav>
     );
 };
