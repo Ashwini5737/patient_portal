@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import PowerBIDashboard from './PowerBIDashboard';
+// import PowerBIDashboard from './PowerBIDashboard';
 import './PatientDetails.css';
 
 function PatientDetails() {
@@ -33,7 +33,10 @@ function PatientDetails() {
     const handleChatClick = () => {
         navigate(`/chat/${id}`);
     };
-
+    const handleDashboardClick = () => {
+        navigate(`/dashboard/${id}`);  // This navigates to the dashboard page
+    };
+    
     const renderTableDetails = () => (
         <table>
             <tbody>
@@ -65,14 +68,16 @@ function PatientDetails() {
               {viewMode === 'table' && patientDetails ? renderTableDetails() : null}
           </div>
           <div className="dashboard-chatbot-container">
-              <div className="dashboard-container">
-                  <PowerBIDashboard />
-              </div>
-              <div className="chatbot-container" onClick={handleChatClick}>
-                  <h4>Open Chatbot</h4>
-                  <p>Click here to chat with the bot about patient details.</p>
-              </div>
-          </div>
+            <div className="dashboard-container" onClick={handleDashboardClick}>
+                <h4>View Dashboard</h4>
+                <p>Click here to view detailed analytics.</p>
+            </div>
+            <div className="chatbot-container" onClick={handleChatClick}>
+                <h4>Open Chatbot</h4>
+                <p>Click here to chat with the bot about patient details.</p>
+            </div>
+        </div>
+
       </div>
   );
 }

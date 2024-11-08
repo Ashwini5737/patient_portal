@@ -1,44 +1,50 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom'; // Import useParams
+import { useParams } from 'react-router-dom';
 import './ChatBot.css';
+
 function ChatBot() {
-    const { id: patientId } = useParams(); // Use useParams to get patientId from URL
+    const { id: patientId } = useParams();
     const [userMessage, setUserMessage] = useState('');
     const [chatResponses, setChatResponses] = useState([]);
-    const [errorMessage, setErrorMessage] = useState(''); // State for error messages
+    const [errorMessage, setErrorMessage] = useState('');
 
     const handleSendMessage = async () => {
-        if (!userMessage.trim()) return; // Prevent sending empty messages
+        if (!userMessage.trim()) return;
         try {
             const response = await axios.post(`http://127.0.0.1:5001/chat/${patientId}`, { message: userMessage });
-            setChatResponses([...chatResponses, { user: userMessage, bot: response.data.response }]);
-            setUserMessage(''); // Reset input field after sending
-            setErrorMessage(''); // Clear any previous error messages
+            // Update chatResponses to include both user and bot messages
+            setChatResponses(prevResponses => [
+                ...prevResponses, 
+                { role: 'user', content: userMessage }, 
+                { role: 'bot', content: response.data.response }
+            ]);
+            setUserMessage('');
         } catch (error) {
             console.error('Error sending message:', error);
-            setErrorMessage('Failed to send message. Please try again.'); // Set error message
+            setErrorMessage('Failed to send message. Please try again.');
         }
     };
 
     return (
-        <div className="chatbot">
-            <div className="chat-window">
+        <div className="chat-container">
+            <div className="messages-container">
                 {chatResponses.map((chat, index) => (
-                    <div key={index}>
-                        <p><strong>User:</strong> {chat.user}</p>
-                        <p><strong>Bot:</strong> {chat.bot}</p>
+                    <div key={index} className={`message ${chat.role === 'user' ? 'user-message' : 'bot-message'}`}>
+                        <p>{chat.content}</p>
                     </div>
                 ))}
-                {errorMessage && <p className="error-message">{errorMessage}</p>} {/* Display error message */}
+                {errorMessage && <p className="error-message">{errorMessage}</p>}
             </div>
-            <input
-                type="text"
-                value={userMessage}
-                onChange={(e) => setUserMessage(e.target.value)}
-                placeholder="Type your message..."
-            />
-            <button onClick={handleSendMessage}>Send</button>
+            <div className="input-container">
+                <input
+                    type="text"
+                    value={userMessage}
+                    onChange={(e) => setUserMessage(e.target.value)}
+                    placeholder="Type your message..."
+                />
+                <button onClick={handleSendMessage}>Send</button>
+            </div>
         </div>
     );
 }

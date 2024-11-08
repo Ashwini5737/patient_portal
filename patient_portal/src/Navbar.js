@@ -1,12 +1,12 @@
-// NavBar.js
 import React from 'react';
-import { useParams } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
-import './Navbar.css'; 
+import { useNavigate, useParams } from 'react-router-dom';
+import './Navbar.css';
 
-const NavBar = ({ patientId }) => {
-    const { id } = useParams();
+const NavBar = () => {
     const navigate = useNavigate();
+    const { id } = useParams(); // Fetching id directly inside NavBar
+
+    console.log("NavBar ID:", id) 
 
     const handleNavigation = (path) => {
         navigate(path);
@@ -14,12 +14,12 @@ const NavBar = ({ patientId }) => {
 
     return (
         <nav>
-            <button onClick={() => handleNavigation('/patient/${id}')}>Home</button>
-            <button onClick={() => handleNavigation(`/apppointment/${id}`)}>Appointment Booking</button>
+            <button onClick={() => handleNavigation(`/patient/${id}`)}>Home</button>
+            <button onClick={() => handleNavigation(`/appointment/${id}`)}>Appointment Booking</button>
             <button onClick={() => handleNavigation(`/dashboard/${id}`)}>Dashboard</button>
             <button onClick={() => handleNavigation(`/chat/${id}`)}>Chatbot</button>
             <button onClick={() => handleNavigation('/emergency')}>Emergency</button>
-            <button onClick={() => handleNavigation('/')}>Login</button>
+            <button onClick={() => navigate('/')}>Logout</button>
         </nav>
     );
 };

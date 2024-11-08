@@ -17,6 +17,7 @@ function Login() {
         last: lastName,
         password: password
       });
+      // Correctly use backticks for template literals
       navigate(`/patient/${response.data.patient_id}`); // Redirect on successful login
     } catch (error) {
       alert(error.response ? error.response.data.message : 'Server error');
