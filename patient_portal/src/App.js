@@ -7,6 +7,7 @@ import NavBar from './Navbar';
 import AppointmentBooking from './AppointmentBooking'; // Make sure this file exists
 import Dashboard from './Dashboard'; // Make sure this file exists
 import Emergency from './Emergency'; // Make sure this file exists
+import Signup from './Signup';
 
 const App = () => {
   return (
@@ -18,6 +19,8 @@ const App = () => {
         <Route path="/appointment/:id" element={<><NavBar /><AppointmentBooking /></>} />
         <Route path="/dashboard/:id" element={<><NavBar /><Dashboard /></>} />
         <Route path="/emergency" element={<Emergency />} />
+        <Route path="/signup" element={<Signup />} />
+
       </Routes>
     </Router>
   );
