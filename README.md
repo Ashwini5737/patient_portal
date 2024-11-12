@@ -30,7 +30,7 @@ A Flask-based patient portal application providing patients with an overview of 
 - **Frontend**: JavaScript, React.js, CSS
 - **AI**: OpenAI API for chatbot and patient summaries
 - **Other**: Flask-CORS, Flask-Session for session management, bcrypt for password hashing
-- 
+
 ## Data Setup and Backend Preparation
 
 To run this application, follow the steps below to set up data and configure the backend:
@@ -40,13 +40,26 @@ To run this application, follow the steps below to set up data and configure the
    
 2. **Data Upload to Microsoft Fabric**:
    - Upload each CSV file to **Microsoft Fabric** as tables using the "Load into Tables" feature.
-   - Create a **semantic model** within Microsoft Fabric, using SQL Endpoints to connect and relate tables logically, enabling structured queries on patient data.
+   - Create a **model layout** within Microsoft Fabric, using SQL Endpoints to connect and relate tables logically, enabling structured queries on patient data.
+   - For this project we have used below connections with tables:
+   ### One To Many:
+   - Patients(Id) to allergies(PATIENT), Patients(Id) to observations(PATIENT), Patients(Id) to Medications(PATIENT),Patients(Id) to claims(PATIENT),Patients(Id) to Imaging Studies(PATIENT),Patients(Id) to Immunization(PATIENT),Patients(Id) to encounters(PATIENT),Patients(Id) to Payer_transactions(PATIENT),Patients(Id) to Procedures(PATIENT),Patient(Id) to Careplans(PATIENT), Patients(Id) to Devices(PATIENT)
+   - Claims(Id) to Claims_transactions(CLAIMID)
+   - Providers(Id) to Claims(PROVIDERID)
+   - Encounters(Id) to Conditions(ENCOUNTER)
+ 
+   ### Many to One:
+   - Supplies(ENCOUNTER) to Encounters(Id)
+   - Payer_transactions(PAYER) to Payer((Id)
 
-3. **SQL Endpoint Testing**:
+   ### One to One:
+   - Patients(Id) to patients_with_password(Id)
+
+4. **SQL Endpoint Testing**:
    - Use SQL queries within Microsoft Fabric to test your semantic model and ensure relationships among tables are correctly defined.
    - Retrieve the **connection string** for your SQL Endpoint, which will be used to connect to your database from the backend.
 
-4. **Hospital Database Setup**:
+5. **Hospital Database Setup**:
    - Similarly, a **hospital database** (for locating hospitals based on patient location), add this data to Microsoft Fabric.
    - **Hospital Data Preprocessing:**
      For the hospital data, use a notebook within Microsoft Fabric and run the following PySpark code to clean and preprocess the hospital data into 12 essential columns. This code reads the hospital data CSV file, selects specific columns, removes any rows with missing values in these columns, cleans the column names, and saves the cleaned data as a new CSV file.
@@ -75,7 +88,7 @@ To run this application, follow the steps below to set up data and configure the
       cleaned_df_1.coalesce(1).write.format("csv").option("header", "true").save(output_path)
       ```
 
-5. **Configuration in Backend Code**:
+6. **Configuration in Backend Code**:
    - Add the SQL Endpoint connection string into the `db_config.ini` file within your project. Include your **username** and **password** for secure connection management.
    - Obtain an **OpenAI API key** and include it in the `db_config.ini` file for chatbot and summary generation functionality.
 
@@ -121,11 +134,13 @@ After completing these steps, your backend should be able to access the patient 
 ## Usage
 1. **Run the Backend Application:**
    ```bash
+   cd Scripts
    python app.py
    ```
    Access the app at http://127.0.0.1:5001.
 2. **Run Frontend Application:**
    ```bash
+   cd ..
    cd patient_portal
    npm install
    npm start
