@@ -15,7 +15,8 @@ def get_db_connection():
         UID={conf['uid']};
         PWD={conf['password']};
         Authentication=ActiveDirectoryInteractive;
-        ENCRYPT=yes;TrustServerCertificate=no;
+        ENCRYPT=yes;
+        TrustServerCertificate=yes;
     """
     return pyodbc.connect(connection_string, timeout=10)
 
@@ -28,6 +29,8 @@ def get_hospital_db_connection():
         UID={conf['uid']};
         PWD={conf['password']};
         Authentication=ActiveDirectoryInteractive;
-        ENCRYPT=yes;TrustServerCertificate=no;
+        ENCRYPT=yes;
+        TrustServerCertificate=yes;
     """
     return pyodbc.connect(connection_string, timeout=10)
+

@@ -61,10 +61,27 @@ const AppointmentBooking = () => {
         <div>
             <h2>Appointment Booking</h2>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '10px' }}>
-                <input name="state" value={filters.state} onChange={handleChange} placeholder="State" />
-                <input name="city" value={filters.city} onChange={handleChange} placeholder="City/Town" />
+                <select name="state" value={filters.state} onChange={handleChange}>
+                    <option value="">Select State</option>
+                    {filterOptions.states.map(state => (
+                        <option key={state} value={state}>{state}</option>
+                    ))}
+                </select>
+                {/* <input name="state" value={filters.state} onChange={handleChange} placeholder="State" /> */}
+                <select name="city" value={filters.city} onChange={handleChange}>
+                    <option value="">Select City</option>
+                    {filterOptions.cities.map(city => (
+                        <option key={city} value={city}>{city}</option>
+                    ))}
+                </select>
+                {/* <input name="city" value={filters.city} onChange={handleChange} placeholder="City/Town" /> */}
                 <input name="zip" value={filters.zip} onChange={handleChange} placeholder="ZIP Code" />
-                <input name="county" value={filters.county} onChange={handleChange} placeholder="County" />
+                <select name="county" value={filters.county} onChange={handleChange}>
+                    <option value="">Select County</option>
+                    {filterOptions.counties.map(county => (
+                        <option key={county} value={county}>{county}</option>
+                    ))}
+                </select>
                 <select name="type" value={filters.type} onChange={handleChange}>
                     <option value="">Select Hospital Type</option>
                     {filterOptions.types.map(type => (
