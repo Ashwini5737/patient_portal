@@ -29,6 +29,31 @@ A Flask-based patient portal application providing patients with an overview of 
 - **Frontend**: JavaScript, React.js, CSS
 - **AI**: OpenAI API for chatbot and patient summaries
 - **Other**: Flask-CORS, Flask-Session for session management, bcrypt for password hashing
+- 
+## Data Setup and Backend Preparation
+
+To run this application, follow the steps below to set up data and configure the backend:
+
+1. **Data Extraction**:
+   - Use the **Synthea API** to generate synthetic patient data. This will create CSV files for 18 different tables related to patient data (e.g., `patients`, `medications`, `allergies`, etc.).
+   
+2. **Data Upload to Microsoft Fabric**:
+   - Upload each CSV file to **Microsoft Fabric** as tables using the "Load into Tables" feature.
+   - Create a **semantic model** within Microsoft Fabric, using SQL Endpoints to connect and relate tables logically, enabling structured queries on patient data.
+
+3. **SQL Endpoint Testing**:
+   - Use SQL queries within Microsoft Fabric to test your semantic model and ensure relationships among tables are correctly defined.
+   - Retrieve the **connection string** for your SQL Endpoint, which will be used to connect to your database from the backend.
+
+4. **Hospital Database Setup**:
+   - Similarly, if you have a **hospital database** (for locating hospitals based on patient location), add this data to Microsoft Fabric.
+   - Set up this database within your semantic model to allow SQL-based filtering and querying for nearby hospitals.
+
+5. **Configuration in Backend Code**:
+   - Add the SQL Endpoint connection string into the `db_config.ini` file within your project. Include your **username** and **password** for secure connection management.
+   - Obtain an **OpenAI API key** and include it in the `db_config.ini` file for chatbot and summary generation functionality.
+
+After completing these steps, your backend should be able to access the patient data and hospital data stored in Microsoft Fabric, enabling the application to perform data retrieval and analysis effectively.
 
 ## Installation
 
