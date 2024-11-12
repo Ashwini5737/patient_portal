@@ -34,8 +34,7 @@ A Flask-based patient portal application providing patients with an overview of 
 
 1. **Clone the Repository**:
    ```bash
-   git clone https://github.com/your-username/patient-portal.git
-   cd patient-portal
+   git clone https://github.com/Bhushan4829/microsoft_fabric_hackathon.git
    ```
 2. Set up a virtual environment(Optional):
    ```bash
@@ -62,12 +61,18 @@ A Flask-based patient portal application providing patients with an overview of 
 3. **Azure Authentication:** If you are using Azure Interactive Browser Credential for authentication, configure the SCP scope and other details in views.py.
 
 ## Usage
-1. **Run the Application:**
+1. **Run the Backend Application:**
    ```bash
    python app.py
    ```
    Access the app at http://127.0.0.1:5001.
-2. API Documentation
+2. **Run Frontend Application:**
+   ```bash
+   cd patient_portal
+   npm install
+   npm start
+   ```
+4. API Documentation
 
 - **Login**: `POST /login` - Authenticate the user.
 - **Signup**: `POST /signup` - Register a new patient account.
@@ -101,14 +106,30 @@ Integrates with Microsoft Fabric to generate a Power BI dashboard using patient 
 ## Directory Structure
 
 ```plaintext
-patient-portal/
-├── app.py               # Main application entry point
+microsoft_fabric_hackathon/
+├── patient_portal/
+│   ├── App.js
+│   ├── App.css
+│   ├── AppointmentBooking.js
+│   ├── AppointmentBooking.css
+│   ├── ChatBot.js
+│   ├── ChatBot.css
+│   ├── Dashboard.js
+│   ├── Login.js
+│   ├── Login.css
+│   ├── Navbar.js
+│   ├── Navbar.css
+│   ├── PatientDetails.js
+│   ├── PatientDetails.css
+│   ├── Signup.js
+│   ├── Signup.css
 ├── scripts/
 │   ├── views.py         # API routes for login, signup, and patient data
 │   ├── chat.py          # Chatbot functionality and patient data fetch
 │   ├── summary.py       # Patient summary generator using OpenAI
 │   ├── appointment.py   # Appointment and hospital locator
-├── db_config.ini        # Configuration file for database credentials (not in version control)
+│   ├── app.py           # Main application entry point
+│   ├── db_config.ini    # Configuration file for database credentials (not in version control)        
 ├── requirements.txt     # List of dependencies
 └── README.md            # Project documentation
 ```
