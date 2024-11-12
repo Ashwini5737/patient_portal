@@ -1,6 +1,8 @@
 # Patient Portal
 
-A Flask-based patient portal application providing patients with an overview of their medical records, hospital search functionality, personalized chatbot assistance, Power BI visualizations, and an emergency contact interface. The portal leverages Microsoft Fabric and OpenAI for secure data management and contextual assistance.
+A Flask-based patient portal application providing patients with an overview of their medical records, hospital search functionality, personalized chatbot assistance, Power BI visualizations, and an emergency contact interface. The portal leverages Microsoft Fabric and OpenAI for secure data management and contextual assistance. Below is the workflow of our patient portal.
+
+![image](https://github.com/user-attachments/assets/72869bfe-3d6e-4201-a191-ce8a9b12e5ea)
 
 ## Table of Contents
 
@@ -12,7 +14,6 @@ A Flask-based patient portal application providing patients with an overview of 
 - [API Endpoints](#api-endpoints)
 - [Directory Structure](#directory-structure)
 - [Troubleshooting](#troubleshooting)
-- [License](#license)
 
 ## Features
 
@@ -46,8 +47,33 @@ To run this application, follow the steps below to set up data and configure the
    - Retrieve the **connection string** for your SQL Endpoint, which will be used to connect to your database from the backend.
 
 4. **Hospital Database Setup**:
-   - Similarly, if you have a **hospital database** (for locating hospitals based on patient location), add this data to Microsoft Fabric.
-   - Set up this database within your semantic model to allow SQL-based filtering and querying for nearby hospitals.
+   - Similarly, a **hospital database** (for locating hospitals based on patient location), add this data to Microsoft Fabric.
+   - **Hospital Data Preprocessing:**
+     For the hospital data, use a notebook within Microsoft Fabric and run the following PySpark code to clean and preprocess the hospital data into 12 essential columns. This code reads the hospital data CSV file, selects specific columns, removes any rows with missing values in these columns, cleans the column names, and saves the cleaned data as a new CSV file.
+
+      ```python
+      from pyspark.sql import SparkSession
+      
+      spark = SparkSession.builder \
+          .appName("Hospital Data Cleaning") \
+          .getOrCreate()
+      file_path = "Files/Hospital_General_Information.csv"  # Update this to the path of your data file
+      df = spark.read.format("csv").option("header", "true").load(file_path)
+      columns_to_keep = [
+          "Facility ID", "Facility Name", "Address", "City/Town", "State",
+          "ZIP Code", "County/Parish", "Telephone Number", "Hospital Type", 
+          "Hospital Ownership", "Emergency Services", "Hospital overall rating"
+      ]
+      cleaned_df = df.select(*columns_to_keep).dropna(how="any", subset=columns_to_keep)
+      def clean_column_names(df):
+          for col in df.columns:
+              new_col = col.strip().replace(" ", "_").replace("/", "_").replace("-", "_")
+              df = df.withColumnRenamed(col, new_col)
+          return df
+      cleaned_df_1 = clean_column_names(cleaned_df)
+      output_path = "Files/Cleaned_hospital_data"  # Update this to your desired output path
+      cleaned_df_1.coalesce(1).write.format("csv").option("header", "true").save(output_path)
+      ```
 
 5. **Configuration in Backend Code**:
    - Add the SQL Endpoint connection string into the `db_config.ini` file within your project. Include your **username** and **password** for secure connection management.
@@ -55,22 +81,18 @@ To run this application, follow the steps below to set up data and configure the
 
 After completing these steps, your backend should be able to access the patient data and hospital data stored in Microsoft Fabric, enabling the application to perform data retrieval and analysis effectively.
 
+
 ## Installation
 
 1. **Clone the Repository**:
    ```bash
    git clone https://github.com/Bhushan4829/microsoft_fabric_hackathon.git
    ```
-2. Set up a virtual environment(Optional):
-   ```bash
-   python3 -m venv venv
-   source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
-   ```
-3. Install Dependencies:
+2. Install Dependencies:
    ```bash
    pip install -r requirements.txt
    ```
-4. **Database Setup:** Ensure that your database connection configurations (e.g., db_config.ini) are properly set with the necessary credentials for Microsoft Fabric and SQL endpoints.
+3. **Database Setup:** Ensure that your database connection configurations (e.g., db_config.ini) are properly set with the necessary credentials for Microsoft Fabric and SQL endpoints.
 
 ## Configuration
 1. **Sensitive Data:** Ensure sensitive data like API keys and database credentials are kept in db_config.ini and are not exposed. The config file should include:
@@ -79,7 +101,18 @@ After completing these steps, your backend should be able to access the patient 
    api_key = your_openai_api_key
 
    [database]
-   connection_string = your_database_connection_string
+   driver=ODBC Driver 18 for SQL Server
+   server= Your Connection String
+   database=Your Database
+   uid=Your Microsoft Account email id
+   password= Your Microsoft Account Password
+
+   [hospital_database]
+   driver=ODBC Driver 18 for SQL Server
+   server= Your Connection String
+   database=Your Database
+   uid=Your Microsoft Account email id
+   password= Your Microsoft Account Password
    ```
 2. **Session and CORS Configuration:**
    - The app uses Flask-Session to manage user sessions and Flask-CORS for cross-origin requests. If needed, modify the settings in app.py.
