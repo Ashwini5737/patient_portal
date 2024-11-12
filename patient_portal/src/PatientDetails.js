@@ -68,14 +68,14 @@ function PatientDetails() {
               {viewMode === 'table' && patientDetails ? renderTableDetails() : null}
           </div>
           <div className="dashboard-chatbot-container">
-            <div className="dashboard-container" onClick={handleDashboardClick}>
-                <h4>View Dashboard</h4>
-                <p>Click here to view detailed analytics.</p>
-            </div>
-            <div className="chatbot-container" onClick={handleChatClick}>
-                <h4>Open Chatbot</h4>
-                <p>Click here to chat with the bot about patient details.</p>
-            </div>
+          <div className="dashboard-container" onClick={handleDashboardClick}>
+                <h4>Detailed Patient Analytics</h4>
+                <p>Explore comprehensive visual reports on patient health trends, treatment effectiveness, and more.</p>
+          </div>
+          <div className="chatbot-container" onClick={handleChatClick}>
+                <h4>Interactive Patient Assistance</h4>
+                <p>Have questions? Chat now with our intelligent assistant for guidance on health queries, medication details, and more.</p>
+          </div>
         </div>
 
       </div>

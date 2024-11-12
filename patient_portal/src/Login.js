@@ -25,18 +25,19 @@ function Login() {
   };
 
   return (
-    <div className="login-container">
-      <h2>PatientPortal Login</h2>
-      <form onSubmit={handleLogin} className="login-form">
-        <input type="text" value={firstName} placeholder="First Name" onChange={e => setFirstName(e.target.value)} />
-        <input type="text" value={lastName} placeholder="Last Name" onChange={e => setLastName(e.target.value)} />
-        <input type="password" value={password} placeholder="Password" onChange={e => setPassword(e.target.value)} />
-        <button type="submit">Login</button>
-        <button onClick={() => navigate('/signup')}>No account? Sign up</button>
-
-      </form>
+    <div className="login-page"> {/* This ensures the background and centering */}
+      <div className="login-container">
+        <h2>PatientPortal Login</h2>
+        <form onSubmit={handleLogin} className="login-form">
+          <input type="text" value={firstName} placeholder="First Name" onChange={e => setFirstName(e.target.value)} />
+          <input type="text" value={lastName} placeholder="Last Name" onChange={e => setLastName(e.target.value)} />
+          <input type="password" value={password} placeholder="Password" onChange={e => setPassword(e.target.value)} />
+          <button type="submit">Login</button>
+          <button onClick={() => navigate('/signup')}>No account? Sign up</button>
+        </form>
+      </div>
     </div>
   );
-}
+}  
 
 export default Login;

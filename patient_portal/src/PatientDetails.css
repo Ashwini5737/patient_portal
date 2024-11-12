@@ -27,26 +27,44 @@
 /* Dashboard and Chatbot layout */
 .dashboard-chatbot-container {
     display: flex;
-    justify-content: space-between;
-    margin-top: 20px; /* Adds space above the containers */
+    justify-content: space-around; /* Adjust spacing around items */
+    margin-top: 20px;
+    gap: 20px; /* Ensures space between containers */
 }
 
 .dashboard-container, .chatbot-container {
-    width: 49%; /* Slightly less than half to fit side by side with a gap */
-    min-height: 500px; /* Set a minimum height for these containers */
-    background-color: #fff; /* Optional: sets a background color */
-    padding: 20px; /* Internal padding */
-    border: 1px solid #ccc; /* Adds a border */
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Adds a shadow for depth */
-    border-radius: 10px; /* Rounded corners */
+    width: calc(50% - 10px); /* Adjust width to account for the gap */
+    min-height: 340px;
+    background-color: #fff;
+    padding: 30px; /* Increased from 20px to 30px for better spacing */
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    border-radius: 10px;
+    cursor: pointer; /* Indicates that these are clickable */
+    transition: transform 0.3s, box-shadow 0.3s; /* Smooth transition for hover effects */
+}
+.dashboard-container h4, .chatbot-container h4 {
+    font-size: 18px; /* Increase font size for headings */
+    color: #0056b3; /* Theme color for headings */
+    margin-bottom: 10px; /* Space between heading and text */
 }
 
+.dashboard-container p, .chatbot-container p {
+    font-size: 16px; /* Text font size */
+    line-height: 1.5; /* Line height for better readability */
+    color: #333; /* Darker text for better readability */
+}
 .dashboard-container:hover, .chatbot-container:hover {
-    transform: scale(1.03);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    transform: translateY(-5px); /* Slight raise effect on hover */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
 }
-
-/* Toggle and Table Styles */
+.view-toggle {
+    display: flex; /* Align children in a row */
+    justify-content: center; /* Center children horizontally */
+    margin: 20px 0; /* Margin above and below for spacing */
+    gap: 10px; /* Space between buttons */
+}
+/* Enhancing button styles for a more modern look */
 .view-toggle button {
     padding: 10px 20px;
     margin: 5px;
@@ -54,12 +72,16 @@
     background-color: #007bff;
     color: white;
     border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Consistent styling with containers */
+    cursor: pointer;
 }
 
 .view-toggle button:hover {
     background-color: #0056b3;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
 }
 
+/* Improving table visibility and styling */
 table {
     width: 100%;
     border-collapse: collapse;

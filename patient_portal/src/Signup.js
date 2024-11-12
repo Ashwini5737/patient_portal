@@ -30,16 +30,18 @@ function Signup() {
   };
 
   return (
-    <div className="signup-container">
+    <div className="signup-page">
+      <div className="signup-container">
       <h2>PatientPortal Signup</h2>
-      <form onSubmit={handleSignup} className="signup-form">
-        <input type="text" value={firstName} placeholder="First Name" onChange={e => setFirstName(e.target.value)} />
-        <input type="text" value={lastName} placeholder="Last Name" onChange={e => setLastName(e.target.value)} />
-        <input type="date" value={birthdate} placeholder="Birthdate" onChange={e => setBirthdate(e.target.value)} />
-        <input type="text" value={ssn} placeholder="SSN" onChange={e => setSSN(e.target.value)} />
-        <input type="password" value={password} placeholder="Password" onChange={e => setPassword(e.target.value)} />
-        <button type="submit">Sign Up</button>
-      </form>
+        <form onSubmit={handleSignup} className="signup-form">
+          <input type="text" value={firstName} placeholder="First Name" onChange={e => setFirstName(e.target.value)} />
+          <input type="text" value={lastName} placeholder="Last Name" onChange={e => setLastName(e.target.value)} />
+          <input type="date" value={birthdate} placeholder="Birthdate" onChange={e => setBirthdate(e.target.value)} />
+          <input type="text" value={ssn} placeholder="SSN" onChange={e => setSSN(e.target.value)} />
+          <input type="password" value={password} placeholder="Password" onChange={e => setPassword(e.target.value)} />
+          <button type="submit">Sign Up</button>
+        </form>
+      </div>
     </div>
   );
 }

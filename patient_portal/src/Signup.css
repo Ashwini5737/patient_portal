@@ -1,22 +1,47 @@
+.signup-page {
+    display: flex;
+    justify-content: center;  /* This centers the child horizontally */
+    align-items: center;      /* This centers the child vertically */
+    height: 100vh;            /* Takes full viewport height */
+    background-color: #ccc;   /* Example background color */
+  }
 .signup-container {
-    width: 300px;
-    margin: 50px auto;
+    width: 350px; /* Adjust width as needed */
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
-}
-
-.signup-form input, .signup-form button {
-    display: block;
-    width: 90%;
-    margin-bottom: 10px;
+    background-color: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: auto; /* Center the container on the page */
+  }
+  
+.signup-form {
+    width: 100%; /* Full width of the parent container */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+ .signup-form input, .signup-form button {
+    width: 100%; /* Full width to use the parent's width */
     padding: 10px;
-}
-
-.signup-form button {
+    margin-bottom: 10px; /* Space between elements */
+    box-sizing: border-box; /* Include padding in width */
+    border: 1px solid #ccc;
+  }
+  
+ .signup-form button {
     background-color: green;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-}
+  }
+  
+ .signup-form button:last-child {
+    margin-bottom: 0; /* Remove bottom margin from the last button */
+  }
+  

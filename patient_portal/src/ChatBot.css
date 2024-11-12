@@ -6,7 +6,7 @@
     padding: 20px;            /* Padding around the contents */
     border: 1px solid #ccc;   /* Border around the chat container */
     border-radius: 10px;      /* Rounded corners for the container */
-    background-color: #f9f9f9; /* Light grey background */
+    background-color: #83caea; /* Light grey background */
     display: flex;            /* Uses flexbox for layout */
     flex-direction: column;   /* Stacks children elements (message area and input area) vertically */
     box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Optional shadow for depth */
@@ -53,28 +53,28 @@
 
 /* Input area styling */
 .input-container {
-    display: flex;             /* Flexbox for input and button alignment */
-    justify-content: space-between; /* Spreads children elements evenly */
-    padding: 10px;            /* Padding inside the input area */
-    border-radius: 0 0 10px 10px; /* Rounds only the bottom corners */
-    background-color: #ffffff; /* White background */
+    display: flex;
+    justify-content: space-between; /* This will ensure the button stays in line with the input */
+    padding: 10px 10px; /* Adjusted padding */
+    border-radius: 0 0 10px 10px; /* Rounded corners at the bottom */
+    background-color: #602fd3; /* Maintains background consistency */
 }
 
 input[type="text"] {
-    flex-grow: 1;              /* Input takes most of the space */
+    flex-grow: 1; /* Allows input to grow and fill space */
     padding: 8px;
-    margin-right: 10px;        /* Margin between input and button */
+    margin-right: 10px; /* Right margin to separate input from button */
     border: 1px solid #ccc;
-    border-radius: 5px;        /* Rounded corners for input */
+    border-radius: 5px; /* Rounded corners for input */
 }
 
 button {
-    padding: 8px 16px;
-    background-color: #4caf50;
-    color: white;
+    padding: 8px 16px; /* Sufficient padding for clickability */
+    background-color: #e83909; /* Consistent color scheme for visibility */
+    color: rgb(16, 15, 15);
     border: none;
     border-radius: 5px;
-    cursor: pointer;
+    cursor: pointer; /* Cursor pointer for better user interaction */
 }
 
 button:hover {

@@ -1,21 +1,23 @@
 nav {
-    background-color: #333; /* Dark background for the navbar */
+    background-color: #333;
     display: flex;
-    justify-content: space-around;
-    padding: 10px 20px;
+    justify-content: center; /* Centered by default */
     align-items: center;
+    padding: 10px 0;
+    z-index: 1000; /* High z-index to ensure visibility */
 }
 
 button {
     background: transparent;
     color: white;
     border: none;
+    display: flex;
+    align-items: center; /* Aligns icon with text */
+    gap: 2px; /* Adds space between icon and text */
     padding: 10px 15px;
-    margin: 0 10px;
-    font-size: 16px;
     cursor: pointer;
-    border-radius: 5px;
     transition: background-color 0.3s;
+    margin: 0 50px; /* Larger margin on larger screens */
 }
 
 button:hover {
@@ -23,5 +25,29 @@ button:hover {
 }
 
 button:focus {
-    outline: none; /* Removes the default focus outline */
+    outline: none;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    button {
+        padding: 8px 10px; /* Smaller padding */
+        margin: 0 20px; /* Smaller margin */
+        font-size: 14px; /* Smaller font size if necessary */
+    }
+    nav {
+        justify-content: space-around; /* Adjust spacing to spread out buttons */
+    }
+}
+
+@media (max-width: 480px) {
+    button {
+        padding: 5px 8px; /* Even smaller padding */
+        margin: 0 10px; /* Even smaller margin */
+        font-size: 12px; /* Even smaller font size */
+    }
+    nav {
+        flex-direction: column; /* Stack buttons vertically */
+        padding: 10px; /* Adjust padding for better vertical spacing */
+    }
 }

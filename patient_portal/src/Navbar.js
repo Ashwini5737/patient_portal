@@ -2,11 +2,12 @@ import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import './Navbar.css';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHome, faCalendarAlt, faTachometerAlt, faComments, faExclamationTriangle, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+
 const NavBar = () => {
     const navigate = useNavigate();
-    const { id } = useParams(); // Fetching id directly inside NavBar
-
-    console.log("NavBar ID:", id) 
+    const { id } = useParams();
 
     const handleNavigation = (path) => {
         navigate(path);
@@ -14,12 +15,12 @@ const NavBar = () => {
 
     return (
         <nav>
-            <button onClick={() => handleNavigation(`/patient/${id}`)}>Home</button>
-            <button onClick={() => handleNavigation(`/appointment/${id}`)}>Appointment Booking</button>
-            <button onClick={() => handleNavigation(`/dashboard/${id}`)}>Dashboard</button>
-            <button onClick={() => handleNavigation(`/chat/${id}`)}>Chatbot</button>
-            <button onClick={() => handleNavigation('/emergency')}>Emergency</button>
-            <button onClick={() => navigate('/')}>Logout</button>
+            <button onClick={() => handleNavigation(`/patient/${id}`)}><FontAwesomeIcon icon={faHome} /> Home</button>
+            <button onClick={() => handleNavigation(`/appointment/${id}`)}><FontAwesomeIcon icon={faCalendarAlt} /> Locate Hospital</button>
+            <button onClick={() => handleNavigation(`/dashboard/${id}`)}><FontAwesomeIcon icon={faTachometerAlt} /> Dashboard</button>
+            <button onClick={() => handleNavigation(`/chat/${id}`)}><FontAwesomeIcon icon={faComments} /> Chatbot</button>
+            <button onClick={() => handleNavigation('/emergency')}><FontAwesomeIcon icon={faExclamationTriangle} /> Emergency</button>
+            <button onClick={() => navigate('/')}><FontAwesomeIcon icon={faSignOutAlt} /> Logout</button>
         </nav>
     );
 };
