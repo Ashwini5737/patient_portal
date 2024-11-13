@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-
+import './AppointmentBooking.css'
 const AppointmentBooking = () => {
     const { id } = useParams();
     const [filters, setFilters] = useState({

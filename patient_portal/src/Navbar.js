@@ -1,9 +1,8 @@
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import './Navbar.css';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome, faCalendarAlt, faTachometerAlt, faComments, faExclamationTriangle, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import './Navbar.css';  // Ensure you have this CSS file linked correctly
 
 const NavBar = () => {
     const navigate = useNavigate();
@@ -15,6 +14,7 @@ const NavBar = () => {
 
     return (
         <nav>
+            <div className="portal-name">Medilink AI</div> {/* Added this line for the portal name */}
             <button onClick={() => handleNavigation(`/patient/${id}`)}><FontAwesomeIcon icon={faHome} /> Home</button>
             <button onClick={() => handleNavigation(`/appointment/${id}`)}><FontAwesomeIcon icon={faCalendarAlt} /> Locate Hospital</button>
             <button onClick={() => handleNavigation(`/dashboard/${id}`)}><FontAwesomeIcon icon={faTachometerAlt} /> Dashboard</button>

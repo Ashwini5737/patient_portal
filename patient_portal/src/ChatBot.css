@@ -4,9 +4,9 @@
     max-width: 600px;         /* Set a maximum width for larger screens */
     margin: 5% auto;          /* Centers the container vertically and horizontally with 5% top margin */
     padding: 20px;            /* Padding around the contents */
-    border: 1px solid #ccc;   /* Border around the chat container */
+    border: 1px solid #0a8c49;   /* Border around the chat container */
     border-radius: 10px;      /* Rounded corners for the container */
-    background-color: #83caea; /* Light grey background */
+    background-color: #eeece7; /* Light grey background */
     display: flex;            /* Uses flexbox for layout */
     flex-direction: column;   /* Stacks children elements (message area and input area) vertically */
     box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Optional shadow for depth */
@@ -57,7 +57,7 @@
     justify-content: space-between; /* This will ensure the button stays in line with the input */
     padding: 10px 10px; /* Adjusted padding */
     border-radius: 0 0 10px 10px; /* Rounded corners at the bottom */
-    background-color: #602fd3; /* Maintains background consistency */
+    background-color: #000000; /* Maintains background consistency */
 }
 
 input[type="text"] {

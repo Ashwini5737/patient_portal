@@ -1,0 +1,23 @@
+.emergency-container {
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    align-items: center;
+    align-content: center;
+}
+
+.emergency-container h1 {
+    color: #cc0000; /*Red to emphasize emergency*/
+    align-content: center;
+}
+
+.emergency-contacts, .first-aid-info, .hospital-locator {
+    margin-top: 20px;
+    align-content: center;
+}
+
+.emergency-contacts p, .first-aid-info p, .hospital-locator p {
+    margin-left: 20px;
+    align-content: center;
+}

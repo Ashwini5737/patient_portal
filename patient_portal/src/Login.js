@@ -27,7 +27,7 @@ function Login() {
   return (
     <div className="login-page"> {/* This ensures the background and centering */}
       <div className="login-container">
-        <h2>PatientPortal Login</h2>
+        <h2>MedilinkAI Login</h2>
         <form onSubmit={handleLogin} className="login-form">
           <input type="text" value={firstName} placeholder="First Name" onChange={e => setFirstName(e.target.value)} />
           <input type="text" value={lastName} placeholder="Last Name" onChange={e => setLastName(e.target.value)} />
