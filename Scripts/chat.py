@@ -1,11 +1,21 @@
 from flask import Blueprint, request, jsonify
 import openai
+import tempfile
 from db import get_db_connection
 from flask_cors import CORS
 from flask import current_app
 import configparser
 import openai
-
+import torch
+from PIL import Image
+import os
+import pandas as pd
+from torchvision import transforms
+import shutil
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+DATA_ENTRY_PATH = "D:\\Downloads\\Databases\\Microsoft Fabric\\microsoft_fabric_hackathon\\Data_Entry_2017.csv"
+data_entry = pd.read_csv(DATA_ENTRY_PATH)
+all_labels = sorted(set(label for sublist in data_entry['Finding Labels'].str.split('|') for label in sublist))
 def get_config(section):
     config = configparser.ConfigParser()
     config.read('db_config.ini')
@@ -96,7 +106,7 @@ def fetch_patient_data(patient_id):
 
     return data
 
-def create_prompt(patient_id, patient_data):
+def create_prompt(patient_id, patient_data,xray_analysis):
     patient_name = patient_data.pop('name', 'Unnamed Patient')
     context_parts = [f"Patient ID {patient_id}, {patient_name}, has the following medical record:"]
     for category, entries in patient_data.items():
@@ -104,24 +114,66 @@ def create_prompt(patient_id, patient_data):
         for entry in entries:
             entry_desc = ', '.join([f"{key}={value}" for key, value in entry.items() if value])
             context_parts.append(entry_desc)
-    
+    context_parts.append(f"X-RAY ANALYSIS: {xray_analysis}")
     context = " ".join(context_parts)
     system_role = "As a medical assistant, you need to consider the following data to provide the best advice:"
     prompt = f"{system_role} {context}"
     return prompt
+model = torch.hub.load('pytorch/vision:v0.10.0', 'resnet50', pretrained=False)
+model.fc = torch.nn.Sequential(
+    torch.nn.Linear(model.fc.in_features, len(all_labels)),
+    torch.nn.Sigmoid()
+)
+model.load_state_dict(torch.load("D:\\Downloads\\Databases\\Microsoft Fabric\\microsoft_fabric_hackathon\\best_model.pth"))
+model.to(device)
+model.eval()
+transform = transforms.Compose([
+    transforms.Resize((224, 224)),
+    transforms.ToTensor(),
+    transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+])
+def analyze_xray(image_path):
+    """ Analyzes an X-ray image and returns the classification result. """
+    image = Image.open(image_path).convert('RGB')
+    image = transform(image).unsqueeze(0).to(device)
+    with torch.no_grad():
+        outputs = model(image)
+        probs, classes = torch.max(outputs, dim=1)
+        predicted_class = all_labels[classes.item()]
+        predicted_prob = torch.sigmoid(probs).item()
+    return f"Predicted Condition: {predicted_class} with probability {predicted_prob:.2%}"
 
 @chat_bp.route('/<patient_id>', methods=['POST'])
 def chat(patient_id):
-    print("Patient ID:", patient_id)
-    user_message = request.json.get('message')
+    current_app.logger.info(f"Handling request for patient ID: {patient_id}")
+    
+    user_message = request.form.get('message', 'No user message received.')
+    file = request.files.get('file')
+    TEMP_FOLDER = tempfile.mkdtemp()
+    image_path = None
+    
+    if file:
+        image_path = os.path.join(TEMP_FOLDER, file.filename)
+        current_app.logger.info(f"Received file: {file.filename}")
+        file.save(image_path)
+        try:
+            xray_result= analyze_xray(image_path)
+        except Exception as e:
+            current_app.logger.error(f"Error processing X-ray image: {str(e)}")
+            xray_result = f"Error processing X-ray image: {str(e)}"
+        finally:
+            shutil.rmtree(TEMP_FOLDER)
+    else:
+        xray_result = "No X-ray image provided."
+
     patient_data = fetch_patient_data(patient_id)
     if not patient_data:
         return jsonify({'error': 'Failed to fetch patient data'}), 500
 
-    prompt = create_prompt(patient_id, patient_data)
+    prompt = create_prompt(patient_id, patient_data,xray_result)
     messages = [
         {"role": "system", "content": prompt},
-        {"role": "user", "content": user_message}
+        {"role": "user", "content": user_message},
     ]
 
     try:
@@ -136,4 +188,5 @@ def chat(patient_id):
         assistant_message = "Error communicating with the chatbot."
 
     return jsonify({'response': assistant_message})
+
 

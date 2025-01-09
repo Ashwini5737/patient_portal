@@ -4,6 +4,8 @@ from flask_cors import CORS
 from chat import chat_bp
 from views import views_bp
 from appointment import appointment_bp
+
+
 app = Flask(__name__)
 CORS(app)  # This enables CORS for all domains on all routes
 app.config["SESSION_PERMANENT"] = False
