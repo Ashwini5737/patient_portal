@@ -1,0 +1,10 @@
+# Ignore environment variables and config files
+PatientPortal/.env
+Scripts/db_config.ini
+
+# Ignore system and dependency files
+node_modules/
+__pycache__/
+.DS_Store
+.env
+db_config.ini
