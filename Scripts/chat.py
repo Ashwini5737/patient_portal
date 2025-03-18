@@ -13,7 +13,7 @@ import pandas as pd
 from torchvision import transforms
 import shutil
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-DATA_ENTRY_PATH = "D:\\Downloads\\Databases\\Microsoft Fabric\\microsoft_fabric_hackathon\\Data_Entry_2017.csv"
+DATA_ENTRY_PATH = "..\Data_Entry_2017.csv"
 data_entry = pd.read_csv(DATA_ENTRY_PATH)
 all_labels = sorted(set(label for sublist in data_entry['Finding Labels'].str.split('|') for label in sublist))
 def get_config(section):
@@ -124,7 +124,7 @@ model.fc = torch.nn.Sequential(
     torch.nn.Linear(model.fc.in_features, len(all_labels)),
     torch.nn.Sigmoid()
 )
-model.load_state_dict(torch.load("D:\\Downloads\\Databases\\Microsoft Fabric\\microsoft_fabric_hackathon\\best_model.pth"))
+model.load_state_dict(torch.load("../best_model.pth"))
 model.to(device)
 model.eval()
 transform = transforms.Compose([

@@ -7,19 +7,24 @@ from gql.transport.requests import RequestsHTTPTransport
 from flask import current_app
 from bcrypt import hashpw, gensalt
 from azure.identity import InteractiveBrowserCredential
+import configparser
 views_bp = Blueprint('views', __name__)
 
-
+def get_config(section):
+    config = configparser.ConfigParser()
+    config.read('db_config.ini')
+    return {key: value for key, value in config.items(section)}
+config = get_config('graphql')
 def get_authenticated_transport():
     app = InteractiveBrowserCredential()
-    scp = 'https://analysis.windows.net/powerbi/api/user_impersonation'
+    scp = config['authenticated_transport']
     result = app.get_token(scp)
 
     if not result.token:
         raise Exception("Could not get access token")
 
     transport = RequestsHTTPTransport(
-        url='https://api.fabric.microsoft.com/v1/workspaces/374a6aa3-23e1-4eea-a9e4-d302fb549085/graphqlapis/f56b47e1-74c6-40ee-95e2-12d591459dec/graphql',
+        url=config['url'],
         use_json=True,
         verify=True,  # Depends on your server's SSL setup
         retries=3,
@@ -121,7 +126,7 @@ def get_patient_data(patient_id):
             return jsonify({'message': 'No patient data found'}), 404
 
     except Exception as e:
-        views_bp.logger.error(f"Error fetching patient data: {str(e)}")
+        current_app.logger.error(f"Error fetching patient data: {str(e)}")
         return jsonify({"error": "Error fetching data"}), 500
     finally:
         cursor.close()
