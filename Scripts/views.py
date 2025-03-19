@@ -126,7 +126,7 @@ def get_patient_data(patient_id):
             return jsonify({'message': 'No patient data found'}), 404
 
     except Exception as e:
-        views_bp.logger.error(f"Error fetching patient data: {str(e)}")
+        current_app.logger.error(f"Error fetching patient data: {str(e)}")
         return jsonify({"error": "Error fetching data"}), 500
     finally:
         cursor.close()

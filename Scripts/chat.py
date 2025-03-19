@@ -1,5 +1,6 @@
 from flask import Blueprint, request, jsonify
-import openai
+from openai import OpenAI
+from azure.identity import InteractiveBrowserCredential
 import tempfile
 from db import get_db_connection
 from flask_cors import CORS
@@ -24,6 +25,7 @@ def get_config(section):
 config = get_config('openai')
 chat_bp = Blueprint('chat', __name__)
 CORS(chat_bp, resources={r"/chat/*": {"origins": "*", "methods": ["POST", "OPTIONS"]}})
+client = OpenAI(api_key=config['api_key'])
 openai.api_key = config['api_key']
 
 patient_context_cache = {}  # Simple in-memory cache
@@ -124,7 +126,8 @@ model.fc = torch.nn.Sequential(
     torch.nn.Linear(model.fc.in_features, len(all_labels)),
     torch.nn.Sigmoid()
 )
-model.load_state_dict(torch.load("../best_model.pth"))
+# model.load_state_dict(torch.load("../best_model.pth"))
+model.load_state_dict(torch.load("../best_model.pth", map_location=torch.device('cpu')))
 model.to(device)
 model.eval()
 transform = transforms.Compose([
@@ -177,7 +180,7 @@ def chat(patient_id):
     ]
 
     try:
-        response = openai.chat.completions.create(
+        response = client.chat.completions.create(
             model="gpt-4o-mini",
             messages=messages,
             max_tokens=150
